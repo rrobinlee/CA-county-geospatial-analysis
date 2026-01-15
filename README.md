@@ -1,8 +1,6 @@
-# Geo-Spatial Analysis of County-Level Unemployment Rates and Socio-Economic Factors in California
+## Geo-Spatial Analysis of County-Level Unemployment Rates and Socio-Economic Factors in California
 
-**Author:** *Robin Lee*
-
-**Date:** *March 22, 2024*
+ *March 22, 2024*
 
 ## 1 Introduction
 
