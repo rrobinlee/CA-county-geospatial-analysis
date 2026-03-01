@@ -1,96 +1,18 @@
-## Geo-Spatial Analysis of County-Level Unemployment Rates and Socio-Economic Factors in California
+# Geo-Spatial Analysis of County-Level Unemployment Rates and Socio-Economic Factors in California
 
- *March 22, 2024*
+This project utilizes data from the U.S. Department of Agriculture's Economic Research Service (ERS). The ERS compiles the latest statistics on socioeconomic indicators—like poverty rates, population change, unemployment rates, and education levels—and provides maps and data for U.S. States and counties/county equivalents. 
 
-## 1 Introduction
-
-### 1.1 Description of the Data
-
-This project utilizes data from the U.S. Department of Agriculture's Economic Research Service (ERS). The ERS compiles the latest statistics on socioeconomic indicators—like poverty rates, population change, unemployment rates, and education levels—and provides maps and data for U.S. States and counties/county equivalents. The data can be accessed at: https://www.ers.usda.gov/data-products/county-level-data-sets/. 
-
-### 1.2 Variable Overview
-
-In this project, I have selected county-level unemployment rate as our target variable on which we want to make predictions. As such, the chosen predictors will consist of the following county-level attributes: median household income as a percentage of California's median household income, the percent of total population living below the poverty line, the percent of adults with a Bachelor's degree, the percent of adults with a high school diploma, the rate of change in net migration, and death rate. To ensure consistency, all measurements will be from 2021. Our final dataset consists of the following variables:
+The data can be accessed at: https://www.ers.usda.gov/data-products/county-level-data-sets/. 
 
 ![image](https://github.com/user-attachments/assets/f9416e68-cb79-48c2-9c17-91e8a030b0d0)
 
-### 1.3 Constructing the Dataset 
+## Lattice Data Analysis
 
-Combining all four socioeconomic datasets—poverty rates, population change, unemployment rates, and education levels—with the longitude-latitude coordinates for each county's seat, the final dataset (`data`) consists of the 6 aforementioned predictors. Because each csv file utilizes a different variable, all county columns are denoted `Area_Name`. 
+**1. Moran’s I statistic**
 
-![image](https://github.com/user-attachments/assets/37ee08fe-5749-4433-a73a-c4f902a461d0)
+Because the mean is not constant, we compute the Moran’s $I$ test statistic using the residuals. We construct and calculate the following: $\boldsymbol{X, X'X, \hat{\beta}, H, \hat{Y}, e}$, obtaining: 
 
-## 2 Exploratory Data Analysis
-
-### 2.1 Mapping County Seat Locations and Bubble Plot of Unemployment
-
-For the bubble plot, unemployment rates are classified into several levels based on the U.S. Bureau of Labor Statistics. In this project, a "Low" unemployment rate is defined as 0-6%, a "Moderate" rate is 6-10%, and a "High" rate is 10% or higher.
-
-![image](https://github.com/user-attachments/assets/2f3f97ba-1c13-48e7-93c1-fdcfae063624)
-
-Analyzing the bubble plot of unemployment rates across California, counties with major metropolitan areas or industries tend to have a "Low" unemployment rate. Specifically, these consist of counties containing or surrounding the Bay Area (San Francisco), Los Angeles, Santa Barbara, San Diego, and Sacramento. 
-
-On the other hand, counties within Central California and nearby the Mexico border have a "High" unemployment rate. Furthermore, counties with "Medium" unemployment rates are generally in rural and low-population regions, such as Northern California and Central California. 
-
-### 2.2 Histograms of Parameters
-
-![image](https://github.com/user-attachments/assets/6b8dcdf5-fdb9-4dab-81d1-498e3fd424d1)
-
-The county unemployment rate is right skewed, with a large majority of rates between 6-8%. Likewise, analyzing the county median income with respect to the California median, most counties are 60-80% of the state median income. Finally, the percent of individuals below the poverty line for each county is roughly normal, with the mean around 12-15%. 
-
-![image](https://github.com/user-attachments/assets/986d2cdb-815f-4eba-b910-91c1d55f7f23)
-
-The percentage of each county's labor force with a Bachelor's degree or higher is extremely right skewed, as 15 counties contain only 15-20% of individuals with at least a Bachelor's degree. On the other hand, roughly 20 counties contain 25-30% of individuals with only a high school diploma. Finally, the rate of net migration is generally negative for most counties, suggesting these regions are losing population. 
-
-### 2.3 Scatterplots
-
-![image](https://github.com/user-attachments/assets/b13e448b-bd9e-47cb-ab7a-bc1971e6e048)
-
-As the county median income with respect to the California median increases, there is a decrease in unemployment rate. On the contrary, as the percent of individuals below the poverty line increases, the unemployment rate increases. Focusing on Bachelor's degree or higher, we see a decrease in unemployment rate as the percentage of each county's labor force with a Bachelor's degree or higher increases. Generally, as the percent of Bachelor's degrees increases, there is also a decrease in percent below poverty and an increase in median income. There does not appear to be a relationship between longitude/latitude and unemployment.
-
-### 2.4 H-Scatterplot of Unemployment Rate
-
-![image](https://github.com/user-attachments/assets/abb80768-081e-4c9c-9195-c5c8c82b1d1b)
-
-The correlation coefficient (r) increases when the separation distance increases from (0.1,0.2] to (0.2,0.3], and peaks at r = 0.925. However, as the separation distance increases over 0.3, we can see the coefficient decrease significantly to r = 0.583.
-
-### 2.5 Correlation Plot
-
-![image](https://github.com/user-attachments/assets/d4db4f73-9821-43a9-9009-5f74723fdbed)
-
-There is a moderate negative correlation between the unemployment rate and the county median income with respect to the California median (`PercentStateMedianIncome`). Similarly, there is also a moderate negative correlation between unemployment rate and the percentage of each county's labor force with a Bachelor's degree or higher (`Bachelors_2021`). 
-
-There is a moderate positive correlation between the unemployment rate and the percent of individuals below the poverty line (`PCTPOVALL_2021`). There is also a moderate positive correlation between unemployment and the percent of each county's labor force with only a high school diploma (`Highschool_2021`). 
-
-### 2.6 Box-Plot of Select Parameters
-
-![image](https://github.com/user-attachments/assets/9ecf13e5-8e06-49fd-9b6d-b634f62b60bc)
-
-We can see that the median unemployment rate is around 7%, with two outliers. The median of county income with respect to the state median is roughly 80%, with one outlier more than 160% of the state median. Finally, the median percent with a Bachelor's degree or higher is around 25%, with no outliers. 
-
-### 2.7 ECDF of Select Parameters
-
-![image](https://github.com/user-attachments/assets/37a30d7c-eb3b-469d-b9bc-2226d61bce6c)
-
-Analyzing the ECDF plots, almost all unemployment rates are between 5-10%, with 80% of unemployment rates above 9%. On the contrary, we see that the percentage of the total population living below the poverty line is mostly between 7-20%, with 60% of counties above 15%. Finally, the county-level percentage  of adults with a high school diploma only is mostly between 10-30%. 
-
-## 3 Lattice Data Analysis
-
-### 3.1 Adjacency Matrix
-
-Mapping the counties and their names in California, we visually identify neighboring counties: 
-
-![image](https://github.com/user-attachments/assets/81ffb6df-982d-4c78-85c4-61e2af2bfa13)
-
-Constructing the adjacency matrix for the counties in California: 
-
-![image](https://github.com/user-attachments/assets/bd339cde-9787-4371-9247-51bc8713614a)
-
-### 3.2 Moran’s I statistic
-
-Because the mean is not constant, we compute the Moran’s $I$ test statistic using the residuals. We construct and calculate the following: $\boldsymbol{X, X'X, \hat{\beta}, H, \hat{Y}, e}$. As such, the statistic is: 
-
-$I = \frac{n}{S_0} \frac{\boldsymbol{e'we}}{\boldsymbol{e'e}}$
+$$I = \dfrac{n}{S_0} \dfrac{\boldsymbol{e'we}}{\boldsymbol{e'e}}$$
 
 We compute the Moran's $I$ statistic as follows:
 ```{r}
@@ -107,28 +29,25 @@ n <- 58
 ones <- rep(1, nrow(adj_df))
 S0 <- t(ones) %*% adj_df %*% ones
 I <- (n / S0) * (t(e) %*% adj_df %*% e) / (t(e) %*% e)
-I
 ```
-Because we have a negative Moran's $I$ statistic (`-0.03992056`), this suggests that we have spatial dispersion rather than spatial clustering; thus, similar values are spread apart between counties. However, because the value is extremely close to 0, we are confident that there is spatial randomness or no spatial autocorrelation.
+* Because we have a negative Moran's $I$ statistic (`-0.03992056`), this suggests that we have spatial dispersion rather than spatial clustering; in other words, similar values are spread apart between counties. 
+* Because the value is extremely close to 0, we are confident that there is spatial randomness or no spatial autocorrelation.
 
-### 3.3 Expected Moran's I Statistic
+**2. Expected Moran's I Statistic**
 
-Since the mean is not constant, we define the expected Moran's $I$ statistic as: 
+Given the mean is not constant, we define the expected Moran's $I$ statistic as: 
 
-$E[I] = -\frac{n}{S_0} \frac{tr(\boldsymbol{WH})}{n-k-1}$ 
+$$E[I] = -\dfrac{n}{S_0} \dfrac{tr(\boldsymbol{WH})}{n-k-1}$$
 
 where $k$ is the number of predictors, $\boldsymbol{W}$ is the adjacency matrix, and $n$ is the number of counties.
 ```{r}
 k <- 7
 n <- 58
 E_I <- -n/S0 * (sum(diag((adj_df %*% H))))/(n-k-1)
-E_I
 ```
 Because our calculated Moran's $I$ statistic (-0.05198904) is neither significantly above or below the expected Moran's $I$ statistic, this suggests that there is no significant spatial autocorrelation in the data as we mentioned above. Therefore, this implies that the distribution of values across space is essentially random, with no discernible clustering or dispersion tendencies in the data. 
 
-## 4 Geostatistical Data Analysis
-
-### 4.1 Variogram Calculations using `GeoR`
+## Variogram Calculations using `GeoR`
 
 Spatial statistics computations can be done in `R` using the package `geoR`. To use the `geoR` package we need to convert our data to a `geodata` object. We initialize our data as such:
 
@@ -137,7 +56,7 @@ data_unemployment <- data %>% select(longitude, latitude, Unemployment_rate_2021
 b <- as.geodata(data_unemployment)
 ```
 
-#### 4.1.1 Computing the Empirical Variogram
+**1. Computing the Empirical Variogram**
 
 The variogram can be computed using the function `variog`. The robust estimator can be used with the argument `estimator.type=“modulus”`, and is robust to outliers compared to the classical estimator. We compute and plot both as such:
 ```{r, fig.height=6, fig.width=8, out.height="70%", out.width="70%", message=FALSE}
