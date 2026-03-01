@@ -11,6 +11,7 @@ library(corrplot)
 library(ggplot2)
 library(gridExtra)
 
+# import
 data <- read.csv("epa_data.csv")
 data <- data %>% 
   group_by(TRI.Facility.ID) %>%
@@ -30,6 +31,7 @@ data <- data %>%
 map("county", "ca", main = "California Map of County Seats")
 points(data$longitude, data$latitude)
 
+# data
 unemployment <- read.csv("Unemployment.csv") %>% 
   filter(State == "CA", Area_Name != "California") %>%
   spread(Attribute, Value) %>%
@@ -65,6 +67,7 @@ county_loc <-
   read.table("http://www.stat.ucla.edu/~nchristo/statistics_c173_c273/ca_seats_coord.txt", 
                 header=TRUE)  %>%
   rename("Area_Name" = "county")
+# adjacency matrix
 adj <- 
   read.table("http://www.stat.ucla.edu/~nchristo/statistics_c173_c273/county_adjacency.txt", 
                 sep="\t", fill=FALSE, strip.white=TRUE)[,c(1,3)]
