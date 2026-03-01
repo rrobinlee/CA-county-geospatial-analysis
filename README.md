@@ -1,6 +1,6 @@
-# Variograms and Kriging Predictions of County-Level Unemployment Rates (U-3) in California
+# Variograms and Kriging Predictions of 2023 County-Level Unemployment Rates (U-3) in California
 
-This project utilizes data from the U.S. Department of Agriculture's Economic Research Service (ERS). The ERS compiles the latest statistics on socioeconomic indicators—like poverty rates, population change, unemployment rates (U-3), and education levels—and provides maps and data for U.S. States and counties/county equivalents. 
+This project utilizes 2023 data from the U.S. Department of Agriculture's Economic Research Service (ERS). The ERS compiles the latest statistics on socioeconomic indicators—like poverty rates, population change, unemployment rates (U-3), and education levels—and provides maps and data for U.S. States and counties/county equivalents. 
 
 The data can be accessed at: https://www.ers.usda.gov/data-products/county-level-data-sets/. 
 
