@@ -1,4 +1,4 @@
-# Geo-Spatial Analysis of County-Level Unemployment Rates and Socio-Economic Factors in California
+# Variograms and Kriging Predictions of County-Level Unemployment Rates in California
 
 This project utilizes data from the U.S. Department of Agriculture's Economic Research Service (ERS). The ERS compiles the latest statistics on socioeconomic indicators—like poverty rates, population change, unemployment rates, and education levels—and provides maps and data for U.S. States and counties/county equivalents. 
 
