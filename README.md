@@ -15,7 +15,7 @@ $$\mathcal{I} = \dfrac{n}{S_0} \dfrac{\boldsymbol{e'We}}{\boldsymbol{e'e}}, \qua
 S_0 = \sum_i \sum_j w_{ij} \quad \text{(sum of all spatial weights)} \newline
 \boldsymbol{e} = \text{vector of residuals} \newline
 \boldsymbol{W} = \text{spatial weights matrix} \newline
-\boldsymbol{e'We} = \text{spatially lagged sum of squared residuals} \newline
+\boldsymbol{e'We} = \text{sum of spatially weighted cross-products of residuals} \newline
 \boldsymbol{e'e} = \text{sum of squared residuals}
 \end{cases}$$
 
