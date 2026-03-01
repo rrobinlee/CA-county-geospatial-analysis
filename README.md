@@ -10,9 +10,14 @@ The data can be accessed at: https://www.ers.usda.gov/data-products/county-level
 
 Because the mean is not constant, the Moran’s $\mathcal{I}$ statistic for measuring spatial autocorrelation, adapted for regression residuals, is: 
 
-$$\mathcal{I} = \dfrac{n}{S_0} \dfrac{\boldsymbol{e'we}}{\boldsymbol{e'e}}$$ 
-
-* where $S_0 = \sum_i \sum_j w_{ij}, \boldsymbol{e} = \text{vector of residuals}, \boldsymbol{W} = \text{spatial weights matrix}, \boldsymbol{e'We} = \text{spatially lagged sum of squared residuals}, \boldsymbol{e'e} = \text{sum of squared residuals}$
+$$\mathcal{I} = \dfrac{n}{S_0} \dfrac{\boldsymbol{e'We}}{\boldsymbol{e'e}}, \quad
+\begin{cases}
+S_0 = \sum_i \sum_j w_{ij} \quad \text{(sum of all spatial weights)} \newline
+\boldsymbol{e} = \text{vector of residuals} \newline
+\boldsymbol{W} = \text{spatial weights matrix} \newline
+\boldsymbol{e'We} = \text{spatially lagged sum of squared residuals} \newline
+\boldsymbol{e'e} = \text{sum of squared residuals}
+\end{cases}$$
 
 Leveraging $\boldsymbol{X, X'X, \hat{\beta}, H, \hat{Y}, e}$ to manually compute the OLS regression and then calculate $\mathcal{I}$ on the residuals: 
 
