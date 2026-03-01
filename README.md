@@ -53,7 +53,7 @@ I <- (n / S0) * (t(e) %*% adj_df %*% e) / (t(e) %*% e)
 ```
 </details>
 
-Because Moran's $\mathcal{I}$ statistic (`-0.03992056`) is negative and close to 0, I am confident there is no spatial autocorrelation; in other words, similar values are spread apart between counties.
+Because Moran's $\mathcal{I}$ statistic (`-0.03992056`) is negative and close to 0, there is no spatial autocorrelation; in other words, similar values are spread apart between counties.
 
 **2. Expected Moran's I Statistic**
 
