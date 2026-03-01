@@ -4,10 +4,6 @@ This project utilizes data from the U.S. Department of Agriculture's Economic Re
 
 The data can be accessed at: https://www.ers.usda.gov/data-products/county-level-data-sets/. 
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/f9416e68-cb79-48c2-9c17-91e8a030b0d0" width="600"/>
-    </p>
-
 ## Lattice Analysis
 
 **1. Moran’s $\mathcal{I}$ statistic**
