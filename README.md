@@ -56,11 +56,11 @@ E_I <- -n/S0 * (sum(diag((adj_df %*% H))))/(n-k-1)
   
 Because the Moran's $I$ statistic (`-0.03992056`) is neither significantly above nor below the expected Moran's $I$ statistic (`-0.05198904`), there is no significant spatial autocorrelation in the data. Therefore, the distribution of values across space is random, with no discernible clustering or dispersion tendencies in the data. 
 
-## Variograms and Semivariograms in Gstat
+## Semivariograms in Gstat
 
-**1. Computing the Empirical Variogram**
+**1. Computing the Empirical Semivariogram**
 
-To account for trend, I fit a linear surface to the data by regressing the data against the longitude and latitude coordinates.
+The empirical variogram measures how spatial autocorrelation changes with distance. Pairs of locations are binned by distance, and the average squared difference in log-unemployment is calculated for each bin. By fitting a linear surface to the data by regressing the data against the longitude and latitude coordinates, the model also accounts for trend.
 
 <details><summary>R Code:</summary>
   
@@ -87,6 +87,8 @@ While the de-trended variogram appears to reach a saturation point, there does n
 <p align="center">
   <img src="https://github.com/user-attachments/assets/e2d87f96-b781-4d46-b89d-89913aac6aef"  width="300"/>
 </p>
+
+The empirical semivariogram is a noisy, discrete summary of the data. For Kriging predictions, a parametric model is fit to the empirical semivariogram to smooth and regularize the estimate of the spatial dependence structure.
 
 **2. Fitting Spherical Semivariograms to the Empirical Variogram**
 
@@ -173,7 +175,7 @@ press_cv1
 ```
 </details>
 
-The exponential model (`2.699818`) has a lower PRESS value than the spherical model (`2.716854`), so we will select this model to make predictions. This is the same result as with the `geoR` package.  
+The exponential model (`2.699818`) has a lower PRESS value than the spherical model (`2.716854`).
 
 ## Kriging Predictions using the Exponential Semivariogram
 
