@@ -8,21 +8,38 @@ The data can be accessed at: https://www.ers.usda.gov/data-products/county-level
 
 **1. Moran’s $\mathcal{I}$ statistic**
 
-Because the mean is not constant, I calculate Moran’s $\mathcal{I}$ test statistic using residuals. Leveraging $\boldsymbol{X, X'X, \hat{\beta}, H, \hat{Y}, e}$, the formula is: 
+Because the mean is not constant, the Moran’s $\mathcal{I}$ statistic for measuring spatial autocorrelation, adapted for regression residuals, is: 
 
-$$\mathcal{I} = \dfrac{n}{S_0} \dfrac{\boldsymbol{e'we}}{\boldsymbol{e'e}}$$
+$$\mathcal{I} = \dfrac{n}{S_0} \dfrac{\boldsymbol{e'we}}{\boldsymbol{e'e}}$$ 
+
+* where $S_0 = \sum_i \sum_j w_{ij}, \boldsymbol{e} = \text{vector of residuals}, \boldsymbol{W} = \text{spatial weights matrix}, \boldsymbol{e'We} = \text{spatially lagged sum of squared residuals}, \boldsymbol{e'e} = \text{sum of squared residuals}$
+
+Leveraging $\boldsymbol{X, X'X, \hat{\beta}, H, \hat{Y}, e}$ to manually compute the OLS regression and then calculate $\mathcal{I}$ on the residuals: 
 
 <details><summary>R Code:</summary>
   
 ```{r}
+# Adjacency matrix
+adj <- adj %>% mutate(V1 = replace(V1, V1 == "", NA))
+adj1 <- adj %>% fill(V1,.direction = "down")
+adj1 <- adj1 %>% filter(grepl("CA", V1, useBytes = TRUE)) %>%
+filter(grepl("CA", V3, useBytes = TRUE)) %>%
+mutate(V1 = replace(V1, V1==V3, NA))
+adj_df <- as.matrix(table(adj1$V1, adj1$V3))
+head(adj_df,c(6,3))
+
 ones <- rep(1, nrow(data))
 X <- as.matrix(cbind(ones, data$PercentStateMedianIncome, data$PCTPOVALL_2021, 
                      data$Bachelors_2021, data$Highschool_2021, data$R_NET_MIG_2021,
                      data$R_DEATH_2021, data$longitude))
 Q <- t(X) %*% X
+# Coefficient estimates are computed using the standard OLS formula:
 beta_hat <- solve(t(X) %*% X) %*% t(X) %*% data$Unemployment_rate_2021
+# Fitted values:
 Yhat <- X %*% beta_hat
+# Residuals:
 e <- data$Unemployment_rate_2021 - Yhat
+# Hat matrix:
 H <- X %*% solve(t(X) %*% X) %*% t(X)
 n <- 58
 ones <- rep(1, nrow(adj_df))
@@ -39,7 +56,7 @@ The expected Moran's $\mathcal{I}$ statistic is:
 
 $$E[\mathcal{I}] = -\dfrac{n}{S_0} \dfrac{tr(\boldsymbol{WH})}{n-k-1}$$
 
-where $k$ is the number of predictors, $\boldsymbol{W}$ is the adjacency matrix, and $n$ is the number of counties.
+where $k$ is the number of predictors, $\boldsymbol{W}$ is the adjacency matrix, $\boldsymbol{H}$ is the hat matrix, and $n$ is the number of counties.
 
 <details><summary>R Code:</summary>
   
